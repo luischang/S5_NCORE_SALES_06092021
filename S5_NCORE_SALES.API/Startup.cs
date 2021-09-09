@@ -8,7 +8,9 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using S5_NCORE_SALES.CORE.Interfaces;
+using S5_NCORE_SALES.CORE.Services;
 using S5_NCORE_SALES.INFRASTRUCTURE.Data;
+using S5_NCORE_SALES.INFRASTRUCTURE.Filters;
 using S5_NCORE_SALES.INFRASTRUCTURE.Repositories;
 using System;
 using System.Collections.Generic;
@@ -30,7 +32,9 @@ namespace S5_NCORE_SALES.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
+            services.AddControllers(options=> {
+                options.Filters.Add<GlobalExceptionFilter>();
+            });
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "S5_NCORE_SALES.API", Version = "v1" });
@@ -41,7 +45,12 @@ namespace S5_NCORE_SALES.API
                 options.UseSqlServer(Configuration.GetConnectionString("DevConnection"));
             });
 
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
             services.AddTransient<ICustomerRepository, CustomerRepository>();
+            services.AddTransient<ICustomerService, CustomerService>();
+
+            
 
         }
 
