@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using S5_NCORE_SALES.CORE.DTOs;
@@ -13,6 +14,7 @@ using System.Threading.Tasks;
 
 namespace S5_NCORE_SALES.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class CustomerController : ControllerBase
