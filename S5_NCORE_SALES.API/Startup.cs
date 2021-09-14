@@ -35,7 +35,19 @@ namespace S5_NCORE_SALES.API
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers(options=> {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowOrigin", builder =>
+                builder
+                    .AllowAnyHeader()
+                    .AllowAnyMethod()
+                    .AllowAnyOrigin()
+                    );
+            });
+
+
+            services.AddControllers(options =>
+            {
                 options.Filters.Add<GlobalExceptionFilter>();
             });
             services.AddSwaggerGen(c =>
@@ -90,6 +102,7 @@ namespace S5_NCORE_SALES.API
             }
 
             app.UseRouting();
+            app.UseCors("AllowOrigin");
 
             app.UseAuthentication();
             app.UseAuthorization();

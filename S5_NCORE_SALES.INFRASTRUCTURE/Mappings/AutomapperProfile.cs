@@ -19,6 +19,9 @@ namespace S5_NCORE_SALES.INFRASTRUCTURE.Mappings
             CreateMap<Customer, CustomerFullNameDTO>();
             CreateMap<CustomerFullNameDTO, Customer>();
 
+            CreateMap<Customer, CustomerPostDTO>();
+            CreateMap<CustomerPostDTO, Customer>();
+
             CreateMap<Customer, CustomerCityCountryDTO>()
                 .ForMember(dest => dest.Pais, opt => opt.MapFrom(src => src.Country));
             CreateMap<CustomerCityCountryDTO, Customer>();
